@@ -1,0 +1,24 @@
+{
+  "driver": {
+    "type": "chrome",
+    "options": {
+      "arguments": [ "start-maximized", "disable-infobars" ]
+    }
+  },
+  "baseUrl": "https://www.phptravels.net/admin",
+  "roomsUrl": "https://www.phptravels.net/admin/hotels/rooms",
+  "culture": "en-US",
+  "useNUnitTestName": true,
+  "logNUnitError": true,
+  "takeScreenshotOnNUnitError": true,
+  "logConsumers": [
+    {
+      "type": "nunit",
+      "minLevel": "Trace",
+      "sectionFinish": true
+    }
+  ],
+
+  "adminEmail": "admin@phptravels.com",
+  "adminPassword": "demoadmin"
+}
