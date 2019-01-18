@@ -32,6 +32,7 @@ namespace PhpTravels.UITests
                 Hotels.Rows[x => x.Name == name].Location.Should.Contain("Washington");
         }
 
+        [Category("Second")]
         [Test]
         public void Hotel_Room_Add()
         {
