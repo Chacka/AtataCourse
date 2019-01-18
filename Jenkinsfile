@@ -40,7 +40,7 @@ node('master') {
                 bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + buildArtifactsFolder + '/PhpTravels.UITests.dll --where cat==First'
                 }
             }, SecondTest: {
-                node('slave')
+                node('Slave')
                 {
                 bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + buildArtifactsFolder + '/PhpTravels.UITests.dll --where cat==Second'
                 }
