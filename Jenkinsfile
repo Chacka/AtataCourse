@@ -1,9 +1,18 @@
+properties([
+    parameters([
+        string (name:'branchName', defaultValue: 'master', description: 'Branch to get the tests from')
+    ])
+])
+
 def isFailed = false
+def branch = params.branchName
+
+currentBuild.description = "Branch: $branch"
 
 node('master') {
     stage('Checkout')
     {
-       git 'https://github.com/Chacka/AtataCourse.git'
+      git branch: branch, url: 'https://github.com/Chacka/AtataCourse.git'
     }
     stage('Restore nuget')
     {
