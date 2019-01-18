@@ -8,6 +8,7 @@ namespace PhpTravels.UITests
 {
     public class HotelTests : UITestFixture
     {
+        [Category("First")]
         [Test]
         public void Hotel_Add()
         {
@@ -17,6 +18,7 @@ namespace PhpTravels.UITests
                Hotels.Rows[x => x.Name == name].Should.BeVisible();
         }
 
+        [Category("Second")]
         [Test]
         public void Hotel_Edit()
         {
@@ -30,6 +32,7 @@ namespace PhpTravels.UITests
                 Hotels.Rows[x => x.Name == name].Location.Should.Contain("Washington");
         }
 
+        [Ignore]
         [Test]
         public void Hotel_Room_Add()
         {
