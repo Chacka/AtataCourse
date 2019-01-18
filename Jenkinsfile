@@ -7,6 +7,19 @@ properties([
 def isFailed = false
 def branch = params.branchName
 def buildArtifactsFolder = "C:/test/BuildPackagesFromPipeline/$BUILD_ID"
+
+def RunNUnitTests(String pathToDll, String condition, String reportName)
+{
+    try 
+    {
+        bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + pathToDll + ' ' +condition + ' --result=' + reportName 
+    }
+   finally
+   {
+      stash name: reportName. includes: reportName
+   }
+}
+
 currentBuild.description = "Branch: $branch"
 
 node('master') {
@@ -37,12 +50,12 @@ node('master') {
             parallel FirstTest: {
                 node('master')
                 {
-                bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + buildArtifactsFolder + '/PhpTravels.UITests.dll --where cat==First'
+                    RunNUnitTests(buildArtifactsFolder + '/PhpTravels.UITests.dll', '--where cat==First', 'TestResult1.xml' )
                 }
             }, SecondTest: {
                 node('Slave')
                 {
-                bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + buildArtifactsFolder + '/PhpTravels.UITests.dll --where cat==Second'
+                    RunNUnitTests(buildArtifactsFolder + '/PhpTravels.UITests.dll', '--where cat==Second', 'TestResult2.xml' )
                 }
             }
             
@@ -53,6 +66,13 @@ node('master')
 {
   stage("Reporting")
     {
+        unstash 'TestResult1.xml'
+        unstash 'TestResult2.xml'
+        
+        archiveArtifacts '*.xml'
+        
+        nunit testResultsPattern: 'TestResult1.xml, TestResult2.xml'
+
         if(isFailed)
         {
             slackSend color: 'danger', message: 'Test failed'
