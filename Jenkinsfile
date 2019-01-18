@@ -34,14 +34,12 @@ node('master') {
         isFailed = true
         stage('Run Tests')
         {
-            parallel 
-            FirstTest: {
+            parallel FirstTest: {
                 node('master')
                 {
                 bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + buildArtifactsFolder + '/PhpTravels.UITests.dll --where cat==First'
                 }
-            }, 
-            SecondTest: {
+            }, SecondTest: {
                 node('slave')
                 {
                 bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" ' + buildArtifactsFolder + '/PhpTravels.UITests.dll --where cat==Second'
