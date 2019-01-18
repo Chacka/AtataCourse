@@ -22,16 +22,35 @@ node('master') {
     {
         bat '"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" src/PhpTravels.UITests.sln'
     }
-    catchError 
+   
+  
+}
+
+ catchError 
     {
         isFailed = true
         stage('Run Tests')
         {
-            bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" src/PhpTravels.UITests/bin/Debug/PhpTravels.UITests.dll'
+            parallel 
+            FirstTest: {
+                node('master')
+                {
+                bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" src/PhpTravels.UITests/bin/Debug/PhpTravels.UITests.dll --where cat==First'
+                }
+            }, 
+            SecondTest: {
+                node('slave')
+                {
+                bat '"C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" src/PhpTravels.UITests/bin/Debug/PhpTravels.UITests.dll --where cat==Second'
+                }
+            }
+            
         }
         isFailed = false
     }
-    stage("Reporting")
+node('master')
+{
+  stage("Reporting")
     {
         if(isFailed)
         {
@@ -41,6 +60,5 @@ node('master') {
         {
             slackSend color: 'good', message: 'Test Ok'
         }
-
     }
 }
