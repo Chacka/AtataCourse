@@ -1,11 +1,10 @@
 node {
-    stage('First stage')
+    stage('Checkout')
     {
-        echo "One"
+       git 'https://github.com/Chacka/AtataCourse.git'
     }
     stage('Second stage')
     {
         echo "Two"
     }
-
 }
