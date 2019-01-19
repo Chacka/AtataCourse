@@ -5,11 +5,11 @@ param
     [Parameter()]
     [String[]] $TaskList = @("RestorePackages", "Build", "CopyArtifacts"),
     [Parameter()]
-    [String] $Configuration
+    [String] $Configuration = "Debug"
     [Parameter()]
-    [String] $Platform
+    [String] $Platform = "Any CPU"
     [Parameter()]
-    [String] $OutputPath
+    [String] $OutputPath 
     # Also add following parameters: 
     #   Configuration
     #   Platform
