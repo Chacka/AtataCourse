@@ -30,7 +30,7 @@ node('master')
     
     stage('Restore NuGet')
     {
-        powershell "./build.ps1 RestorePackages -BuildArtifactsFolder $buildArtifactsFolder "
+        powershell "build.ps1 RestorePackages -BuildArtifactsFolder $buildArtifactsFolder "
        // bat '"C:/Dev/nuget.exe" restore src/PhpTravels.UITests.sln'
     }
 
