@@ -13,7 +13,7 @@ def RunNUnitTests(String pathToDll, String condition, String reportName)
 {
     try
     {
-        powershell script: '.\\build.ps1'
+        bat "powershell.exe -file itunesForward.ps1 -OutputPath 'c:/test/results' "
     }
     finally
     {
@@ -25,6 +25,7 @@ node('master')
 {
     stage('Checkout')
     {
+        powershell script: '.\\build.ps1'
         git branch: branch, url: 'https://github.com/PixelScrounger/atata-phptravels-uitests.git'
     }
     
