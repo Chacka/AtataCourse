@@ -25,17 +25,18 @@ node('master')
 {
     stage('Checkout')
     {
-        powershell script: '.\\build.ps1'
         git branch: branch, url: 'https://github.com/PixelScrounger/atata-phptravels-uitests.git'
     }
     
     stage('Restore NuGet')
     {
-        bat '"C:/Dev/nuget.exe" restore src/PhpTravels.UITests.sln'
+        powershell ".\\build.ps1 RestorePackages -BuildArtifactsFolder $buildArtifactsFolder "
+       // bat '"C:/Dev/nuget.exe" restore src/PhpTravels.UITests.sln'
     }
 
     stage('Build Solution')
     {
+        powershell ".\\build.ps1 BuildSolution -Solution src/PhpTravels.UITests.sln
         bat '"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" src/PhpTravels.UITests.sln'
     }
 

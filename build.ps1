@@ -4,12 +4,11 @@ param
 (
     [Parameter()]
     [String[]] $TaskList = @("RestorePackages", "Build", "CopyArtifacts"),
-    [Parameter()]
-    [String] $Configuration = "Debug"
-    [Parameter()]
-    [String] $Platform = "Any CPU"
-    [Parameter()]
-    [String] $OutputPath 
+    [String] $Configuration = "Debug",
+    [String] $Platform = "Any CPU",
+    [String] $OutputPath ,
+    [String] $BuildArtifactsFolder,
+    [String] $Solution ,
     # Also add following parameters: 
     #   Configuration
     #   Platform
@@ -25,8 +24,8 @@ param
 
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 $NugetExe = Join-Path $PSScriptRoot "nuget.exe"
-$MSBuildPath = "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe"
-$SlnPath = 'src/PhpTravels.UITests.sln'
+$MSBuildPath = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe"
+//$lnPath = 'src/PhpTravels.UITests.sln'
 # Define additional variables here (MSBuild path, etc.)
 
 Function DownloadNuGet()
@@ -49,7 +48,7 @@ Function RestoreNuGetPackages()
 Function BuildSolution()
 {
     Write-Output "Building '$Solution' solution..."
-    MSBuildPath SlnPath
+    MSBuildPath Solution
     # MSBuild.exe call here
 }
 
